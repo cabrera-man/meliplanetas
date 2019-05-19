@@ -9,7 +9,7 @@ import manu.cab.planetas.domain.PlanetaSol;
 
 public class AreaCalculatorTest {
 	
-	AreaCalculator ac = new AreaCalculator();
+	GeomHelper ac = new GeomHelper();
 	
 	Planeta pA = new Planeta(3, 2000);
 	Planeta pB = new Planeta(-5, 1000);

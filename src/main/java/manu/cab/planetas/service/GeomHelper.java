@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import manu.cab.planetas.domain.Planeta;
 
 @Service
-public class AreaCalculator {
+public class GeomHelper {
 	
 	public double area(int dia, Planeta planetaA, Planeta planetaB, Planeta planetaC) {
 		double part1 = planetaA.getPoint2D(dia).getX()*(planetaB.getPoint2D(dia).getY() - planetaC.getPoint2D(dia).getY());
