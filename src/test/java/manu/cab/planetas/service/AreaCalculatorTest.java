@@ -4,18 +4,19 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import manu.cab.planetas.domain.Planeta;
-import manu.cab.planetas.domain.PlanetaSol;
+import manu.cab.planetas.domain.CuerpoCeleste;
+import manu.cab.planetas.domain.OrbitaPlaneta;
+import manu.cab.planetas.domain.OrbitaSol;
 
 public class AreaCalculatorTest {
 	
 	GeomHelper ac = new GeomHelper();
 	
-	Planeta pA = new Planeta(3, 2000);
-	Planeta pB = new Planeta(-5, 1000);
-	Planeta pC = new Planeta(1, 500);
+	CuerpoCeleste pA = new CuerpoCeleste(new OrbitaPlaneta(3, 2000));
+	CuerpoCeleste pB = new CuerpoCeleste(new OrbitaPlaneta(-5, 1000));
+	CuerpoCeleste pC = new CuerpoCeleste(new OrbitaPlaneta(1, 500));
 	
-	Planeta sol = new PlanetaSol();
+	CuerpoCeleste sol = new CuerpoCeleste(new OrbitaSol());
 
 	@Test
 	public void test() {
@@ -25,7 +26,7 @@ public class AreaCalculatorTest {
 		System.out.println("Planeta b: " + pB.getPoint2D(dia));
 		System.out.println("Planeta c: " + pC.getPoint2D(dia));
 		
-		fail("Not yet implemented");
+		//fail("Not yet implemented");
 	}
 	
 	@Test

@@ -4,12 +4,12 @@ import java.awt.geom.Point2D;
 
 import org.springframework.stereotype.Service;
 
-import manu.cab.planetas.domain.Planeta;
+import manu.cab.planetas.domain.CuerpoCeleste;
 
 @Service
 public class GeomHelper {
 	
-	public double area(int dia, Planeta planetaA, Planeta planetaB, Planeta planetaC) {
+	public double area(int dia, CuerpoCeleste planetaA, CuerpoCeleste planetaB, CuerpoCeleste planetaC) {
 		double part1 = planetaA.getPoint2D(dia).getX()*(planetaB.getPoint2D(dia).getY() - planetaC.getPoint2D(dia).getY());
 		double part2 = planetaB.getPoint2D(dia).getX()*(planetaA.getPoint2D(dia).getY() - planetaC.getPoint2D(dia).getY());
 		double part3 = planetaC.getPoint2D(dia).getX()*(planetaA.getPoint2D(dia).getY() - planetaB.getPoint2D(dia).getY());
@@ -19,7 +19,7 @@ public class GeomHelper {
 		return result;
 	}
 	
-	public double perimeter(int dia, Planeta planetaA, Planeta planetaB, Planeta planetaC) {
+	public double perimeter(int dia, CuerpoCeleste planetaA, CuerpoCeleste planetaB, CuerpoCeleste planetaC) {
 		
 		double distPAPB = Math.sqrt(Math.pow(planetaB.getPoint2D(dia).getX() - planetaA.getPoint2D(dia).getX(), 2d) + Math.pow(planetaB.getPoint2D(dia).getY() - planetaA.getPoint2D(dia).getY(), 2d));
 		double distPBPC = Math.sqrt(Math.pow(planetaC.getPoint2D(dia).getX() - planetaB.getPoint2D(dia).getX(), 2d) + Math.pow(planetaC.getPoint2D(dia).getY() - planetaB.getPoint2D(dia).getY(), 2d));
@@ -28,7 +28,7 @@ public class GeomHelper {
 		return distPAPB + distPBPC + distPCPA;
 	}
 	
-	public boolean pointInTriangle(int dia, Planeta planetaA, Planeta planetaB, Planeta planetaC, Planeta sol)
+	public boolean pointInTriangle(int dia, CuerpoCeleste planetaA, CuerpoCeleste planetaB, CuerpoCeleste planetaC, CuerpoCeleste sol)
 	{
 		//Honestidad 100%
 		//https://www.youtube.com/watch?v=HYAgJN3x4GA

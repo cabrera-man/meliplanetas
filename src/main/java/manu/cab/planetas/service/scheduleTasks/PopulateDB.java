@@ -3,8 +3,9 @@ package manu.cab.planetas.service.scheduleTasks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import manu.cab.planetas.domain.Planeta;
-import manu.cab.planetas.domain.PlanetaSol;
+import manu.cab.planetas.domain.CuerpoCeleste;
+import manu.cab.planetas.domain.OrbitaPlaneta;
+import manu.cab.planetas.domain.OrbitaSol;
 import manu.cab.planetas.domain.Pronostico;
 import manu.cab.planetas.repository.PronosticoRepository;
 import manu.cab.planetas.service.GeomHelper;
@@ -18,11 +19,11 @@ public class PopulateDB {
 	private GeomHelper geomHelper;
 	
 	public void populateDB() {
-		Planeta pA = new Planeta(3, 2000);
-		Planeta pB = new Planeta(-5, 1000);
-		Planeta pC = new Planeta(1, 500);
+		CuerpoCeleste pA = new CuerpoCeleste(new OrbitaPlaneta(3, 2000));
+		CuerpoCeleste pB = new CuerpoCeleste(new OrbitaPlaneta(-5, 1000));
+		CuerpoCeleste pC = new CuerpoCeleste(new OrbitaPlaneta(1, 500));
 		
-		Planeta sol = new PlanetaSol();
+		CuerpoCeleste sol = new CuerpoCeleste(new OrbitaSol());
 		
 		int countCollinear = 0;
 		int countSequia = 0;

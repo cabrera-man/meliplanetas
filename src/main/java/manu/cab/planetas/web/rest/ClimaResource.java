@@ -19,8 +19,8 @@ public class ClimaResource {
 	private PronosticoRepository pronosticoRepository;
 	
 	@RequestMapping(path = "/clima", method = RequestMethod.GET)
-	public String clima(@RequestParam int dia) {
+	public Pronostico clima(@RequestParam int dia) {
 		List<Pronostico> pronosticos = pronosticoRepository.findByDia(dia);
-		return pronosticos.get(0).getClima();
+		return pronosticos.get(0);
 	}
 }
