@@ -1,5 +1,7 @@
 package manu.cab.planetas.service.scheduleTasks;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -12,6 +14,9 @@ import manu.cab.planetas.service.GeomHelper;
 
 @Component
 public class PopulateDB {
+	
+	Logger logger = LoggerFactory.getLogger(PopulateDB.class);
+	
 	@Autowired
 	private PronosticoRepository pronosticoRepository;
 	
@@ -27,30 +32,41 @@ public class PopulateDB {
 		
 		int countCollinear = 0;
 		int countSequia = 0;
-		int countDiasLluvia = 0;
+		
+		int countPeriodoLluvia = 0;
+		boolean flagPeriodoLluvia = false;
+		Double maxPerimetro = new Double(0d);
+		int diaMaxLluvia = 0;
 		
 		double signumPrevPlanet = -1f;
 		double signumPrevSun = -1f;
 		
-		Double maxPerimetro = new Double(0d);
 		
-		for(int n = 1; n < 365*10; n++) {
+		
+		for(int n = -2; n < 365*10; n++) {
 			String clima = "Dia común";
 			
 			double areaPlanet = geomHelper.area(n, pA, pB, pC);
-			double areaABS = Math.abs(areaPlanet);
 			
 			double areaSun = geomHelper.area(n, pA, pB, sol);
 			
 			boolean isSunInsideTriangle = geomHelper.pointInTriangle(n, pA, pB, pC, sol);
 			if(isSunInsideTriangle) {
-				countDiasLluvia++;
-				double perimetroPlanet = geomHelper.perimeter(n, pA, pB, pC);
+				//Nuevo periodo de lluvia
+				if(flagPeriodoLluvia == false) {
+					flagPeriodoLluvia = true;
+					countPeriodoLluvia++;
+				}
+				
 				//Max perimetro del triangulo
+				double perimetroPlanet = geomHelper.perimeter(n, pA, pB, pC);
 				if(maxPerimetro.compareTo(new Double(perimetroPlanet)) < 0 ) {
+					diaMaxLluvia = n;
 					maxPerimetro = new Double(perimetroPlanet);
 				}
 				clima = "Lluvia";
+			} else {
+				flagPeriodoLluvia = false;
 			}
 			
 			//Para saber si hubo colinearidad uso el cambio de signo del area del triangulo
@@ -64,7 +80,6 @@ public class PopulateDB {
 					clima = "Sequía";
 				} else {
 					countCollinear++;
-					System.out.println("Cond Optimas Dia: " + n + " Area: " + areaABS);
 					clima = "Condiciones óptimas de presión y temperatura";
 				}
 			}
@@ -79,6 +94,11 @@ public class PopulateDB {
 			
 			pronosticoRepository.save(pronostico);
 		}
+		
+		logger.info("Períodos de sequía: " + countSequia);
+		logger.info("Períodos de lluvia: " + countPeriodoLluvia);
+		logger.info("Día de mayor lluvía: " + diaMaxLluvia);
+		logger.info("Períodos de cond. óptimas de presión y temperatura: " + countCollinear);
 	}
 
 }
