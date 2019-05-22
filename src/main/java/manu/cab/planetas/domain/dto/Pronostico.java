@@ -1,4 +1,4 @@
-package manu.cab.planetas.domain;
+package manu.cab.planetas.domain.dto;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -7,7 +7,7 @@ import javax.persistence.Id;
 public class Pronostico {
 
 	@Id
-	int dia;
+	Integer dia;
 	
 	String clima;
 

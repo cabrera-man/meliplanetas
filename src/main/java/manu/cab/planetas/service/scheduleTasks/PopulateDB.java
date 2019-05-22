@@ -1,5 +1,7 @@
 package manu.cab.planetas.service.scheduleTasks;
 
+import java.util.ArrayList;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,9 +10,11 @@ import org.springframework.stereotype.Component;
 import manu.cab.planetas.domain.CuerpoCeleste;
 import manu.cab.planetas.domain.OrbitaPlaneta;
 import manu.cab.planetas.domain.OrbitaSol;
-import manu.cab.planetas.domain.Pronostico;
+import manu.cab.planetas.domain.dto.Pronostico;
+import manu.cab.planetas.domain.dto.PronosticoInforme;
+import manu.cab.planetas.repository.PronosticoInformeRepository;
 import manu.cab.planetas.repository.PronosticoRepository;
-import manu.cab.planetas.service.GeomHelper;
+import manu.cab.planetas.service.util.GeomHelper;
 
 @Component
 public class PopulateDB {
@@ -19,6 +23,9 @@ public class PopulateDB {
 	
 	@Autowired
 	private PronosticoRepository pronosticoRepository;
+	
+	@Autowired
+	private PronosticoInformeRepository pronosticoInformeRepository;
 	
 	@Autowired
 	private GeomHelper geomHelper;
@@ -94,6 +101,14 @@ public class PopulateDB {
 			
 			pronosticoRepository.save(pronostico);
 		}
+		
+		ArrayList<PronosticoInforme> listInforme = new ArrayList<PronosticoInforme>();
+		listInforme.add(new PronosticoInforme("PERIODOS_SEQUIA", "Períodos de sequía: " + countSequia));
+		listInforme.add(new PronosticoInforme("PERIODOS_LLUVIA", "Períodos de lluvia: " + countPeriodoLluvia));
+		listInforme.add(new PronosticoInforme("DIA_MAYOR_LLUVIA", "Día de mayor lluvía: " + diaMaxLluvia));
+		listInforme.add(new PronosticoInforme("PERIODOS_COND_OPT_PRES_TEMP", "Períodos de cond. óptimas de presión y temperatura: " + countCollinear));
+		
+		pronosticoInformeRepository.saveAll(listInforme);
 		
 		logger.info("Períodos de sequía: " + countSequia);
 		logger.info("Períodos de lluvia: " + countPeriodoLluvia);

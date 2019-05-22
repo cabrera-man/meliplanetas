@@ -4,10 +4,10 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import manu.cab.planetas.domain.Pronostico;
+import manu.cab.planetas.domain.dto.Pronostico;
 
-public interface PronosticoRepository extends JpaRepository<Pronostico, Long> {
+public interface PronosticoRepository extends JpaRepository<Pronostico, Integer> {
 	
-	List<Pronostico> findByDia(int dia);
+	List<Pronostico> findByDia(Integer dia);
 
 }
